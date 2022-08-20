@@ -26,6 +26,9 @@ app.use(passport.initialize());
 app.use(express.static(join(__dirname, "./uploads")));
 
 // Inject sub router and apis
+app.use("/", (req, res) => {
+  res.send("Hello World!");
+});
 app.use("/api/users", userApis);
 app.use("/api/profiles", profileApis);
 
