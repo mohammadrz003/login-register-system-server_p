@@ -28,6 +28,9 @@ app.use(express.static(join(__dirname, "./uploads")));
 // Inject sub router and apis
 app.use("/api/users", userApis);
 app.use("/api/profiles", profileApis);
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 const main = async () => {
   try {
