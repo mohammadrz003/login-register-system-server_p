@@ -20,10 +20,13 @@ require("./middlewares/passpost-middleware");
 const app = express();
 
 // Apply application middlewares
-app.use(cors());
-app.use(json());
+app.use(express.json());
+app.use(
+  cors({
+  })
+);
 app.use(passport.initialize());
-app.use(express.static(join(__dirname, "./uploads")));
+app.use("/uploads", express.static(join(__dirname, "./uploads")));
 
 // Inject sub router and apis
 app.use("/api/users", userApis);

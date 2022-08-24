@@ -11,3 +11,4 @@ const password = check(
 
 export const RegisterValidations = [password, name, email];
 export const AuthenticateValidations = [password];
+export const UpdateValidations = [name, email];

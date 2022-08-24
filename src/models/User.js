@@ -7,24 +7,31 @@ import { pick } from "lodash";
 
 const UserSchema = new Schema(
   {
+    avatar: {
+      type: String,
+      required: false,
+      default: null,
+    },
     name: {
       type: String,
       required: true,
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "email required"],
+      unique: [true, "email already registered"],
     },
     password: {
       type: String,
-      required: true,
     },
+    source: { type: String, required: [true, "source not specified"] },
   },
   { timestamps: true }
 );
 
 UserSchema.pre("save", async function (next) {
   let user = this;
+  if (!user.password) return next();
   if (!user.isModified("password")) return next();
   user.password = await hash(user.password, 10);
   next();
@@ -45,7 +52,7 @@ UserSchema.methods.generateJWT = async function () {
 };
 
 UserSchema.methods.getUserInfo = function () {
-  return pick(this, ["_id", "email", "name"]);
+  return pick(this, ["_id", "email", "name", "avatar"]);
 };
 
 const User = model("users", UserSchema);
