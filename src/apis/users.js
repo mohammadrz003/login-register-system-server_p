@@ -172,7 +172,7 @@ router.put(
         return res.status(400).json({
           success: false,
           message:
-            "You can't update your email when you register with a third party app.",
+            "You can't update your email when you registered with a third party app.",
         });
       }
       const updatedUser = await User.findOneAndUpdate(
