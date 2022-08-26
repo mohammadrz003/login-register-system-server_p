@@ -26,15 +26,12 @@ router.post("/register", RegisterValidations, Validator, async (req, res) => {
     let { email } = req.body;
     let user = await User.findOne({ email });
     // Check if the user exist with that email
-    user = await User.findOne({ email });
-    if (user) {
-      if (user.source != "local")
-        return res.status(400).json({
-          success: false,
-          message:
-            "You have previously signed up with a different signin method.",
-        });
-    }
+    if (user && user.source != "local")
+      return res.status(400).json({
+        success: false,
+        message:
+          "You have previously signed up with a different signin method.",
+      });
     if (user) {
       return res.status(400).json({
         success: false,
@@ -73,7 +70,7 @@ router.post(
     try {
       let { email, password } = req.body;
       let user = await User.findOne({ email });
-      if (user.source != "local") {
+      if (user && user.source != "local") {
         return res.status(400).json({
           success: false,
           message:
