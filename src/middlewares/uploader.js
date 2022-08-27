@@ -13,6 +13,7 @@ const destination = (req, file, next) => {
 
 const upload = multer({
   storage: multer.diskStorage({ destination, filename }),
+  limits: { fileSize: 1048576 }, // 10mb
 });
 
 export default upload;
